@@ -31,6 +31,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
           <groupId>org.springframework.cloud</groupId>
           <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
@@ -47,7 +51,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <start-class>com.thoughtmechanix.confsvr.ConfigServerApplication</start-class>
+        <start-class>org.mike.confsvr.ConfigServerApplication</start-class>
 
         <docker.image.name>mikebychkov/tmx-confsvr</docker.image.name>
         <docker.image.tag>chapter3</docker.image.tag>
