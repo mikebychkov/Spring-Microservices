@@ -1,0 +1,11 @@
+
+spring:
+  application:
+    name: licensingservice
+  profiles:
+    active: default
+  config:
+    import: "http://localhost:8888"
+  data:
+    rest:
+      base-path: "/api"

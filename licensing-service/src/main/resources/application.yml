@@ -8,22 +8,8 @@
 ## H2
 #spring.h2.console.enabled: "true"
 
-spring:
-  application:
-    name: licensingservice
-  profiles:
-    active: default
-  config:
-    import: "http://localhost:8888"
-  data:
-    rest:
-      base-path: "/api"
-
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
-# https://github.com/spring-cloud/spring-cloud-config/blob/master/docs/src/main/asciidoc/spring-cloud-config.adoc#spring-cloud-config-server
-# https://www.baeldung.com/spring-cloud-configuration
