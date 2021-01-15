@@ -8,8 +8,6 @@ services:
       ENCRYPT_KEY: "IMSYMMETRIC"
   database:
     image: postgres:12.5
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "Pa$$w0rd"
