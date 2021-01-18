@@ -1,6 +1,5 @@
 package org.mike.licenses.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "licenses")
 public class License{
+
   @Id
   @Column(name = "license_id", nullable = false)
   private String licenseId;

@@ -10,8 +10,6 @@
   <packaging>pom</packaging>
 
   <name>Spring-Microservices</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
 
   <properties>
     <java.version>11</java.version>
@@ -29,6 +27,8 @@
   <modules>
     <module>licensing-service</module>
     <module>confsvr</module>
+    <module>eurekasvr</module>
+    <module>organization-service</module>
   </modules>
 
   <build>
