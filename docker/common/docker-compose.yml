@@ -6,6 +6,7 @@ services:
        - "8761:8761"
   configserver:
     image: mikebychkov/tmx-confsvr:chapter4
+    restart: always
     ports:
        - "8888:8888"
     environment:
@@ -21,29 +22,37 @@ services:
       POSTGRES_DB: "spmia_local"
   licensingservice:
     image: mikebychkov/tmx-licensing-service:chapter4
+    restart: always
     depends_on:
+      - eurekaserver
       - configserver
       - database
     ports:
       - "8080:8080"
     environment:
       PROFILE: "default"
+      SERVER_PORT: "8080"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      EUREKASERVER_PORT: "8761"
       CONFIGSERVER_URI: "http://configserver:8888"
       CONFIGSERVER_PORT: "8888"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
+  organizationservice:
+    image: mikebychkov/tmx-organization-service:chapter4
+    restart: always
+    depends_on:
+      - eurekaserver
+      - configserver
+      - database
+    ports:
+      - "8085:8085"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8085"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
-  organizationservice:
-      image: mikebychkov/tmx-organization-service:chapter4
-      ports:
-        - "8085:8085"
-      environment:
-        PROFILE: "default"
-        SERVER_PORT: "8085"
-        CONFIGSERVER_URI: "http://configserver:8888"
-        EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-        EUREKASERVER_PORT: "8761"
-        CONFIGSERVER_PORT: "8888"
-        DATABASESERVER_PORT: "5432"
-        ENCRYPT_KEY: "IMSYMMETRIC"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      CONFIGSERVER_PORT: "8888"
+      DATABASESERVER_PORT: "5432"
+      ENCRYPT_KEY: "IMSYMMETRIC"

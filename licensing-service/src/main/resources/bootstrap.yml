@@ -3,11 +3,15 @@ spring:
     name: licensingservice
   profiles:
     active: default
-  #config:
-  #  import: "http://localhost:8888"
   cloud:
     config:
       enabled: true
-  data:
-    rest:
-      base-path: "/api"
+  #config:
+  #  import: "http://localhost:8888"
+
+## Whilst config server registering as "config server" at eureka server takes more time than to start another
+## eureka clients, services depending on config server crashing (at least when using @Value placeholders) for first time start.
+## Conclusions:
+## - not to use @Value placeholders
+## - or use "restart: always" in docker-compose.yml with a service definition to make service try to restart
+##   config server not found
