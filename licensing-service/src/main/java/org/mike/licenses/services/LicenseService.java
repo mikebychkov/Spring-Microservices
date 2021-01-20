@@ -47,11 +47,19 @@ public class LicenseService {
         );
     }
 
+    // COMMON PROPERTIES CAN BE DEFINED ON THE CLASS LEVEL WITH ANNOTATION @DefaultProperties
     @HystrixCommand(fallbackMethod = "buildFallbackLicenseList",
         threadPoolKey = "getLicensesByOrgThreadPool",
         threadPoolProperties = {
             @HystrixProperty(name = "coreSize", value = "30"),
             @HystrixProperty(name = "maxQueueSize", value = "10")
+        },
+        commandProperties = {
+            @HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
+            @HystrixProperty(name = "circuitBreaker.errorThresholdPercentage", value = "75"),
+            @HystrixProperty(name = "circuitBreaker.sleepWindowMilliseconds", value = "7000"),
+            @HystrixProperty(name = "metrics.rollingStats.timeInMilliseconds", value = "15000"),
+            @HystrixProperty(name = "metrics.rollingStats.numBuckets", value = "5")
         }
     )
     public List<License> getLicensesByOrg(String organizationId) {
