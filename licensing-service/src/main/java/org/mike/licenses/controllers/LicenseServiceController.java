@@ -2,7 +2,6 @@ package org.mike.licenses.controllers;
 
 import org.mike.licenses.model.License;
 import org.mike.licenses.services.LicenseService;
-import org.mike.licenses.config.ServiceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +19,6 @@ public class LicenseServiceController {
 
     @Autowired
     private LicenseService licenseService;
-
-    @Autowired
-    private ServiceConfig config;
 
     @RequestMapping(value="/",method = RequestMethod.GET)
     public List<License> getLicenses( @PathVariable("organizationId") String organizationId) {
