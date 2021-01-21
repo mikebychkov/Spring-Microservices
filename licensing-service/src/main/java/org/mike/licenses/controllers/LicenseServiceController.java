@@ -1,7 +1,10 @@
 package org.mike.licenses.controllers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mike.licenses.model.License;
 import org.mike.licenses.services.LicenseService;
+import org.mike.licenses.utils.UserContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,17 +20,23 @@ import java.util.List;
 @RequestMapping(value="v1/organizations/{organizationId}/licenses")
 public class LicenseServiceController {
 
+    private static final Logger log = LogManager.getLogger(LicenseServiceController.class);
+
     @Autowired
     private LicenseService licenseService;
 
     @RequestMapping(value="/",method = RequestMethod.GET)
     public List<License> getLicenses( @PathVariable("organizationId") String organizationId) {
+
+        log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
+
         return licenseService.getLicensesByOrg(organizationId);
     }
 
     @RequestMapping(value="/{licenseId}",method = RequestMethod.GET)
     public License getLicenses( @PathVariable("organizationId") String organizationId,
                                 @PathVariable("licenseId") String licenseId) {
+
         return licenseService.getLicense(organizationId, licenseId);
     }
 
