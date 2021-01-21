@@ -9,3 +9,17 @@ eureka:
     fetchRegistry: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+#zuul:
+#  ignored-services: "*"
+#  prefix: /api
+#  routes:
+#    licensingservice: /licensing/**
+#    organizationservice: /organization/**
+
+#zuul.debug.request: true
+#hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 3000
+#hystrix.command.licensingservice.execution.isolation.thread.timeoutInMilliseconds: 7000
+#licensingservice.ribbon.ReadTimeout: 7000
+
+# TODO: find why "/routes" and "/refresh" endpoints doesnt work

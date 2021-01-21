@@ -24,7 +24,7 @@ spring:
         encrypt.enabled: false
         git:
           uri: https://github.com/mikebychkov/Spring-Microservices-Config/
-          searchPaths: licensingservice, organizationservice
+          searchPaths: licensingservice, organizationservice, zuulservice # TODO: find how not to edit this row every time you need to store config to new service
 
 eureka:
   instance:
