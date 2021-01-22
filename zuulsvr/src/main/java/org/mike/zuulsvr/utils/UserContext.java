@@ -1,6 +1,4 @@
-package org.mike.licenses.utils;
-
-import org.springframework.stereotype.Component;
+package org.mike.zuulsvr.utils;
 
 //@Component
 public class UserContext {

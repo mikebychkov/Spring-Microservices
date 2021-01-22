@@ -1,4 +1,4 @@
-package org.mike.licenses.utils;
+package org.mike.zuulsvr.utils;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

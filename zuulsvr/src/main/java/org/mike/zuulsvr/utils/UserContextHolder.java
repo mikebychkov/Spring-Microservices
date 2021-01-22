@@ -1,4 +1,4 @@
-package org.mike.licenses.utils;
+package org.mike.zuulsvr.utils;
 
 import org.springframework.util.Assert;
 
