@@ -1,11 +1,11 @@
 version: '2'
 services:
   eurekaserver:
-    image: mikebychkov/tmx-eurekasvr:chapter4
+    image: mikebychkov/tmx-eurekasvr:chapter6
     ports:
        - "8761:8761"
   configserver:
-    image: mikebychkov/tmx-confsvr:chapter4
+    image: mikebychkov/tmx-confsvr:chapter6
     restart: always
     ports:
        - "8888:8888"
@@ -13,6 +13,19 @@ services:
       ENCRYPT_KEY: "IMSYMMETRIC"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
+  zuulserver:
+    image: mikebychkov/tmx-zuulsvr:chapter6
+    restart: always
+    ports:
+      - "5555:5555"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "5555"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      EUREKASERVER_PORT:        "8761"
+      DATABASESERVER_PORT:      "5432"
+      CONFIGSERVER_PORT:        "8888"
   database:
     image: postgres:12.5
     restart: always
@@ -21,7 +34,7 @@ services:
       POSTGRES_PASSWORD: "Zxcv1234"
       POSTGRES_DB: "spmia_local"
   licensingservice:
-    image: mikebychkov/tmx-licensing-service:chapter4
+    image: mikebychkov/tmx-licensing-service:chapter6
     restart: always
     depends_on:
       - eurekaserver
@@ -39,7 +52,7 @@ services:
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
   organizationservice:
-    image: mikebychkov/tmx-organization-service:chapter4
+    image: mikebychkov/tmx-organization-service:chapter6
     restart: always
     depends_on:
       - eurekaserver
@@ -53,6 +66,4 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_URI: "http://configserver:8888"
-      CONFIGSERVER_PORT: "8888"
-      DATABASESERVER_PORT: "5432"
-      ENCRYPT_KEY: "IMSYMMETRIC"
+      

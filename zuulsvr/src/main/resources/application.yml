@@ -22,4 +22,8 @@ eureka:
 #hystrix.command.licensingservice.execution.isolation.thread.timeoutInMilliseconds: 7000
 #licensingservice.ribbon.ReadTimeout: 7000
 
-# TODO: find why "/routes" and "/refresh" endpoints doesnt work
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

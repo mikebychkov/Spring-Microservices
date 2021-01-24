@@ -13,5 +13,6 @@ spring:
 ## eureka clients, services depending on config server crashing (at least when using @Value placeholders) for first time start.
 ## Conclusions:
 ## - not to use @Value placeholders
-## - or use "restart: always" in docker-compose.yml with a service definition to make service try to restart
+## - or use "restart: always" in docker-compose.yml with a service definition to make service try to restart if
 ##   config server not found
+## - /actuator/refresh - also helps
