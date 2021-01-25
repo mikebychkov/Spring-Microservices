@@ -16,3 +16,5 @@ spring:
 ## - or use "restart: always" in docker-compose.yml with a service definition to make service try to restart if
 ##   config server not found
 ## - /actuator/refresh - also helps
+##
+## TODO: learn how to start environment properly in term of "config server"
