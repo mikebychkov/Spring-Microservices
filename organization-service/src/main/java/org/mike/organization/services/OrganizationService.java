@@ -29,4 +29,8 @@ public class OrganizationService {
     public void deleteOrg(Organization org) {
         orgRepository.delete(org);
     }
+
+    public void deleteOrgById(String id) {
+        orgRepository.deleteById(id);
+    }
 }

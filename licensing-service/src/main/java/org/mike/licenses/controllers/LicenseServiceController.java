@@ -26,7 +26,7 @@ public class LicenseServiceController {
     private LicenseService licenseService;
 
     @RequestMapping(value="/",method = RequestMethod.GET)
-    public List<License> getLicenses( @PathVariable("organizationId") String organizationId) {
+    public List<License> getLicenses(@PathVariable("organizationId") String organizationId) {
 
         log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
 
@@ -54,15 +54,5 @@ public class LicenseServiceController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String deleteLicenses( @PathVariable("licenseId") String licenseId) {
         return String.format("This is the Delete");
-    }
-
-    // DISCOVERY
-
-    @RequestMapping(value="/{licenseId}/{clientType}",method = RequestMethod.GET)
-    public License getLicensesWithClient( @PathVariable("organizationId") String organizationId,
-                                          @PathVariable("licenseId") String licenseId,
-                                          @PathVariable("clientType") String clientType) {
-
-        return licenseService.getLicense(organizationId, licenseId, clientType);
     }
 }

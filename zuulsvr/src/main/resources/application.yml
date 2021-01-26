@@ -22,6 +22,9 @@ eureka:
 #hystrix.command.licensingservice.execution.isolation.thread.timeoutInMilliseconds: 7000
 #licensingservice.ribbon.ReadTimeout: 7000
 
+zuul:
+  sensitive-headers: Cookie,Set-Cookie
+
 management:
   endpoints:
     web:

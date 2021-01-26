@@ -19,23 +19,23 @@ public class OrganizationServiceController {
     private OrganizationService orgService;
 
     @RequestMapping(value="/{organizationId}",method = RequestMethod.GET)
-    public Organization getOrganization( @PathVariable("organizationId") String organizationId) {
+    public Organization getOrganization(@PathVariable("organizationId") String organizationId) {
         return orgService.getOrg(organizationId);
     }
 
     @RequestMapping(value="/{organizationId}",method = RequestMethod.PUT)
-    public void updateOrganization( @PathVariable("organizationId") String orgId, @RequestBody Organization org) {
+    public void updateOrganization(@PathVariable("organizationId") String orgId, @RequestBody Organization org) {
         orgService.updateOrg(org);
     }
 
-    @RequestMapping(value="/{organizationId}",method = RequestMethod.POST)
+    @RequestMapping(value="/", method = RequestMethod.POST)
     public void saveOrganization(@RequestBody Organization org) {
        orgService.saveOrg(org);
     }
 
-    @RequestMapping(value="/{organizationId}",method = RequestMethod.DELETE)
+    @RequestMapping(value="/{organizationId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteOrganization( @PathVariable("orgId") String orgId,  @RequestBody Organization org) {
-        orgService.deleteOrg(org);
+    public void deleteOrganization(@PathVariable("organizationId") String orgId) {
+        orgService.deleteOrgById(orgId);
     }
 }

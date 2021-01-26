@@ -29,6 +29,7 @@ public class UserContextFilter implements Filter {
         UserContextHolder.getContext().setOrgId(httpServletRequest.getHeader(UserContext.ORG_ID));
 
         log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
+        log.info("****** LICENSING-SVC incoming auth token: " + UserContextHolder.getContext().getAuthToken());
 
         filterChain.doFilter(httpServletRequest, servletResponse);
     }

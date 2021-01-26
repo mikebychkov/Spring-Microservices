@@ -4,8 +4,6 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.mike.licenses.clients.OrganizationDiscoveryClient;
-import org.mike.licenses.clients.OrganizationFeignClient;
 import org.mike.licenses.clients.OrganizationRestTemplateClient;
 import org.mike.licenses.model.License;
 import org.mike.licenses.model.Organization;
@@ -25,12 +23,6 @@ public class LicenseService {
 
     @Autowired
     private LicenseRepository licenseRepository;
-
-    @HystrixCommand
-    public License getLicense(String organizationId, String licenseId) {
-        License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
-        return license;
-    }
 
     private void randomlyRunLong() {
         Random rnd = new Random();
@@ -68,7 +60,7 @@ public class LicenseService {
         }
     )
     public List<License> getLicensesByOrg(String organizationId) {
-        randomlyRunLong(); // FOR IMAGE CIRCUIT BREAKER WORK SAKE
+        //randomlyRunLong(); // FOR IMAGE CIRCUIT BREAKER WORK SAKE
 
         log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
 
@@ -95,42 +87,19 @@ public class LicenseService {
     // DISCOVERY
 
     @Autowired
-    OrganizationFeignClient organizationFeignClient;
-
-    @Autowired
     OrganizationRestTemplateClient organizationRestClient;
 
-    @Autowired
-    OrganizationDiscoveryClient organizationDiscoveryClient;
-
-    private Organization retrieveOrgInfo(String organizationId, String clientType) {
-        Organization organization = null;
-
-        switch (clientType) {
-            case "feign":
-                System.out.println("I am using the feign client");
-                organization = organizationFeignClient.getOrganization(organizationId);
-                break;
-            case "rest":
-                System.out.println("I am using the rest client");
-                organization = organizationRestClient.getOrganization(organizationId);
-                break;
-            case "discovery":
-                System.out.println("I am using the discovery client");
-                organization = organizationDiscoveryClient.getOrganization(organizationId);
-                break;
-            default:
-                organization = organizationRestClient.getOrganization(organizationId);
-        }
-
-        return organization;
+    @HystrixCommand
+    private Organization getOrganization(String organizationId) {
+        return organizationRestClient.getOrganization(organizationId);
     }
 
     @HystrixCommand
-    public License getLicense(String organizationId,String licenseId, String clientType) {
+    public License getLicense(String organizationId, String licenseId) {
+
         License license = licenseRepository.findByOrganizationIdAndLicenseId(organizationId, licenseId);
 
-        Organization org = retrieveOrgInfo(organizationId, clientType);
+        Organization org = getOrganization(organizationId);
 
         return license
                 .withOrganizationName(org.getName())

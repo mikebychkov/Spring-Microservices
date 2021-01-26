@@ -17,3 +17,16 @@ spring:
   data:
     rest:
       base-path: "/api"
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8901/auth/user
+    client:
+      grant-type: client_credentials
+
+logging:
+  level:
+    com.netflix: WARN
+    org.springframework.web: WARN
+    org.mike: DEBUG
