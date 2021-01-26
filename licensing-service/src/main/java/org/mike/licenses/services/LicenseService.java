@@ -101,6 +101,8 @@ public class LicenseService {
 
         Organization org = getOrganization(organizationId);
 
+        if (org == null) return license;
+
         return license
                 .withOrganizationName(org.getName())
                 .withContactName(org.getContactName())

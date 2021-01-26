@@ -1,11 +1,11 @@
 version: '2'
 services:
   eurekaserver:
-    image: mikebychkov/tmx-eurekasvr:chapter6
+    image: mikebychkov/tmx-eurekasvr:chapter7
     ports:
        - "8761:8761"
   configserver:
-    image: mikebychkov/tmx-confsvr:chapter6
+    image: mikebychkov/tmx-confsvr:chapter7
     restart: always
     ports:
        - "8888:8888"
@@ -14,7 +14,7 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
   zuulserver:
-    image: mikebychkov/tmx-zuulsvr:chapter6
+    image: mikebychkov/tmx-zuulsvr:chapter7
     restart: always
     ports:
       - "5555:5555"
@@ -23,9 +23,9 @@ services:
       SERVER_PORT: "5555"
       CONFIGSERVER_URI: "http://configserver:8888"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT:        "8761"
-      DATABASESERVER_PORT:      "5432"
-      CONFIGSERVER_PORT:        "8888"
+      EUREKASERVER_PORT: "8761"
+      CONFIGSERVER_PORT: "8888"
+      DATABASESERVER_PORT: "5432"
   database:
     image: postgres:12.5
     restart: always
@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: "Zxcv1234"
       POSTGRES_DB: "spmia_local"
   licensingservice:
-    image: mikebychkov/tmx-licensing-service:chapter6
+    image: mikebychkov/tmx-licensing-service:chapter7
     restart: always
     depends_on:
       - eurekaserver
@@ -46,13 +46,15 @@ services:
       PROFILE: "prod"
       SERVER_PORT: "8080"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT: "8761"
       CONFIGSERVER_URI: "http://configserver:8888"
+      AUTHSERVER_URI: "http://authenticationservice:8901/auth/user/"
+      EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
+      AUTHSERVER_PORT: "8901"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
   organizationservice:
-    image: mikebychkov/tmx-organization-service:chapter6
+    image: mikebychkov/tmx-organization-service:chapter7
     restart: always
     depends_on:
       - eurekaserver
@@ -64,6 +66,26 @@ services:
       PROFILE: "prod"
       SERVER_PORT: "8085"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
-      EUREKASERVER_PORT: "8761"
       CONFIGSERVER_URI: "http://configserver:8888"
-      
+      AUTHSERVER_URI: "http://authenticationservice:8901/auth/user/"
+      EUREKASERVER_PORT: "8761"
+      CONFIGSERVER_PORT: "8888"
+      AUTHSERVER_PORT: "8901"
+      DATABASESERVER_PORT: "5432"
+  authenticationservice:
+    image: mikebychkov/tmx-authentication-service:chapter7
+    restart: always
+    depends_on:
+      - eurekaserver
+      - configserver
+      - database
+    ports:
+      - "8901:8901"
+    environment:
+      PROFILE: "default"
+      SERVER_PORT: "8901"
+      EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      CONFIGSERVER_URI: "http://configserver:8888"
+      EUREKASERVER_PORT: "8761"
+      CONFIGSERVER_PORT: "8888"
+      DATABASESERVER_PORT: "5432"

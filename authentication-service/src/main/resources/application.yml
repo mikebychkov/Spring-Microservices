@@ -23,3 +23,5 @@ logging:
     com.netflix: WARN
     org.springframework.web: WARN
     org.mike: DEBUG
+
+# TODO: OAUTH2+JWT https://www.baeldung.com/spring-security-oauth-jwt
