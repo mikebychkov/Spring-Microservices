@@ -10,16 +10,20 @@ eureka:
 server:
   port: 8085
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-
 spring:
   data:
     rest:
       base-path: "/api"
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: orgChangeTopic
+          content-type: application/json
+      kafka:
+        binder:
+          zkNodes: localhost
+          brokers: localhost
 
 security:
   oauth2:
@@ -33,3 +37,11 @@ logging:
     org.springframework.security: WARN
     org.springframework.cloud: WARN
     org.mike: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# TODO: INSTALL KAFKA https://computingforgeeks.com/configure-apache-kafka-on-ubuntu/

@@ -9,12 +9,14 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 @Component
 public class OrganizationRestTemplateClient {
 
     @Autowired
-    OAuth2RestTemplate restTemplate;
+    //OAuth2RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     private static final Logger logger = LoggerFactory.getLogger(OrganizationRestTemplateClient.class);
 

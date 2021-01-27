@@ -1,5 +1,9 @@
 package org.mike.licenses;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.mike.licenses.events.models.OrganizationChangeModel;
+import org.mike.licenses.utils.UserContextInterceptor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +12,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -25,12 +32,13 @@ import java.util.List;
 //@EnableFeignClients     // USED WHEN IMPLEMENTING FEIGN LIBRARIES
 //@RefreshScope
 @SpringBootApplication
-@EnableCircuitBreaker   // HYSTRIX LIBRARY
-@EnableResourceServer   // ENABLING OAUTH2 SERVER PROTECTION
-//@EnableOAuth2Client
+@EnableCircuitBreaker       // HYSTRIX LIBRARY
+@EnableResourceServer       // ENABLING OAUTH2 SERVER PROTECTION
+@EnableBinding(Sink.class)  // ENABLING CLOUD-STREAM
 public class LicensingServiceApplication {
 
-    /*
+    private static final Logger log = LogManager.getLogger(LicensingServiceApplication.class);
+
     @LoadBalanced
     @Bean
     public RestTemplate getRestTemplate(){
@@ -44,13 +52,19 @@ public class LicensingServiceApplication {
         }
         return template;
     }
-    */
 
+    /*
     @LoadBalanced
     @Bean
     public OAuth2RestTemplate oauth2RestTemplate(@Qualifier("oauth2ClientContext")  OAuth2ClientContext oauth2ClientContext,
                                                  OAuth2ProtectedResourceDetails details) {
         return new OAuth2RestTemplate(details, oauth2ClientContext);
+    }
+    */
+
+    @StreamListener(Sink.INPUT)
+    public void loggerSink(OrganizationChangeModel orgChange) {
+        log.info("### RECEIVED KAFKA MESSAGE - AN EVENT for organization id {}", orgChange.getOrganizationId());
     }
 
     public static void main(String[] args) {
