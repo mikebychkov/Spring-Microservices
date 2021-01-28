@@ -48,9 +48,13 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       CONFIGSERVER_URI: "http://configserver:8888"
       AUTHSERVER_URI: "http://authenticationservice:8901/auth/user/"
+      KAFKASERVER_URI: "kafkaserver"
+      ZKSERVER_URI: "kafkaserver"
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
       AUTHSERVER_PORT: "8901"
+      KAFKASERVER_PORT: "2181"
+      REDIS_PORT: "6379"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
   organizationservice:
@@ -68,9 +72,12 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       CONFIGSERVER_URI: "http://configserver:8888"
       AUTHSERVER_URI: "http://authenticationservice:8901/auth/user/"
+      KAFKASERVER_URI: "kafkaserver"
+      ZKSERVER_URI: "kafkaserver"
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
       AUTHSERVER_PORT: "8901"
+      KAFKASERVER_PORT: "2181"
       DATABASESERVER_PORT: "5432"
   authenticationservice:
     image: mikebychkov/tmx-authentication-service:chapter8
