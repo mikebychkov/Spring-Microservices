@@ -44,4 +44,10 @@ management:
       exposure:
         include: "*"
 
-# TODO: INSTALL KAFKA https://computingforgeeks.com/configure-apache-kafka-on-ubuntu/
+# TODO: INSTALL KAFKA
+# https://computingforgeeks.com/configure-apache-kafka-on-ubuntu/
+# https://kafka.apache.org/quickstart
+
+# TODO: GUIDES
+# https://reflectoring.io/spring-boot-kafka/
+# https://www.confluent.io/blog/apache-kafka-spring-boot-application/
