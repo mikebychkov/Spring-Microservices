@@ -14,7 +14,8 @@ spring:
   cloud:
     stream:
       bindings:
-        input:
+        #input:
+        inboundOrgChanges:
           destination: orgChangeTopic
           content-type: application/json
           group: licensingGroup
@@ -22,6 +23,9 @@ spring:
         binder:
           zkNodes: localhost
           brokers: localhost
+  redis:
+    port: 6379
+    host: localhost
 
 security:
   oauth2:

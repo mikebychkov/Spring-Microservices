@@ -14,7 +14,7 @@ public class SimpleSourceBean {
 
     private Source source;
 
-    private static final Logger logger = LogManager.getLogger(SimpleSourceBean.class);
+    private static final Logger log = LogManager.getLogger(SimpleSourceBean.class);
 
     @Autowired
     public SimpleSourceBean(Source source) {
@@ -22,7 +22,7 @@ public class SimpleSourceBean {
     }
 
     public void publishOrgChange(String action, String orgId) {
-        logger.info("### SENDING KAFKA MESSAGE: {} for Organization Id: {}", action, orgId);
+        log.info("### SENDING KAFKA MESSAGE: {} for Organization Id: {}", action, orgId);
         OrganizationChangeModel change =  new OrganizationChangeModel(
                 OrganizationChangeModel.class.getTypeName(),
                 action,

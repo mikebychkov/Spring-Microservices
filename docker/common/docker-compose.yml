@@ -1,11 +1,11 @@
 version: '2'
 services:
   eurekaserver:
-    image: mikebychkov/tmx-eurekasvr:chapter7
+    image: mikebychkov/tmx-eurekasvr:chapter8
     ports:
        - "8761:8761"
   configserver:
-    image: mikebychkov/tmx-confsvr:chapter7
+    image: mikebychkov/tmx-confsvr:chapter8
     restart: always
     ports:
        - "8888:8888"
@@ -14,7 +14,7 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
   zuulserver:
-    image: mikebychkov/tmx-zuulsvr:chapter7
+    image: mikebychkov/tmx-zuulsvr:chapter8
     restart: always
     ports:
       - "5555:5555"
@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: "Zxcv1234"
       POSTGRES_DB: "spmia_local"
   licensingservice:
-    image: mikebychkov/tmx-licensing-service:chapter7
+    image: mikebychkov/tmx-licensing-service:chapter8
     restart: always
     depends_on:
       - eurekaserver
@@ -54,7 +54,7 @@ services:
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
   organizationservice:
-    image: mikebychkov/tmx-organization-service:chapter7
+    image: mikebychkov/tmx-organization-service:chapter8
     restart: always
     depends_on:
       - eurekaserver
@@ -73,7 +73,7 @@ services:
       AUTHSERVER_PORT: "8901"
       DATABASESERVER_PORT: "5432"
   authenticationservice:
-    image: mikebychkov/tmx-authentication-service:chapter7
+    image: mikebychkov/tmx-authentication-service:chapter8
     restart: always
     depends_on:
       - eurekaserver
@@ -89,3 +89,14 @@ services:
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
       DATABASESERVER_PORT: "5432"
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - 6379:6379
+  kafkaserver:
+    image: spotify/kafka
+    restart: always
+    ports:
+      - 2181:2181
+      - 9092:9092

@@ -3,7 +3,9 @@ package org.mike.licenses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mike.licenses.events.models.OrganizationChangeModel;
+import org.mike.licenses.repository.OrganizationRedisRepository;
 import org.mike.licenses.utils.UserContextInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +18,8 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
@@ -34,7 +38,6 @@ import java.util.List;
 @SpringBootApplication
 @EnableCircuitBreaker       // HYSTRIX LIBRARY
 @EnableResourceServer       // ENABLING OAUTH2 SERVER PROTECTION
-@EnableBinding(Sink.class)  // ENABLING CLOUD-STREAM
 public class LicensingServiceApplication {
 
     private static final Logger log = LogManager.getLogger(LicensingServiceApplication.class);
@@ -61,11 +64,6 @@ public class LicensingServiceApplication {
         return new OAuth2RestTemplate(details, oauth2ClientContext);
     }
     */
-
-    @StreamListener(Sink.INPUT)
-    public void loggerSink(OrganizationChangeModel orgChange) {
-        log.info("### RECEIVED KAFKA MESSAGE - AN EVENT for organization id {}", orgChange.getOrganizationId());
-    }
 
     public static void main(String[] args) {
         SpringApplication.run(LicensingServiceApplication.class, args);

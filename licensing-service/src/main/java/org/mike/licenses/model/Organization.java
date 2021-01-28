@@ -1,7 +1,13 @@
 package org.mike.licenses.model;
 
+import org.springframework.data.redis.core.RedisHash;
+
+import javax.persistence.Id;
+
+@RedisHash
 public class Organization {
 
+    @Id
     String id;
     String name;
     String contactName;
@@ -11,7 +17,6 @@ public class Organization {
     public String getId() {
         return id;
     }
-
 
     public void setId(String id) {
         this.id = id;
