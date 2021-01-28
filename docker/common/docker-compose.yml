@@ -99,11 +99,11 @@ services:
   redis:
     image: redis
     restart: always
-    ports:
-      - 6379:6379
+    #ports:
+    #  - 6379:6379
   kafkaserver:
-    image: spotify/kafka
+    image: mikebychkov/kafka
     restart: always
-    ports:
-      - 2181:2181
-      - 9092:9092
+    #ports:
+    #  - 2181:2181
+    #  - 9092:9092

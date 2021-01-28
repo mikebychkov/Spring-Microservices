@@ -1,5 +1,5 @@
 FROM ubuntu:20.04
-RUN apt -y update && apt -y install && apt -y install curl
+RUN apt -y update && apt -y upgrade && apt -y install curl
 RUN apt -y install openjdk-11-jre-headless
 
 RUN apt-get update && apt-get install -y wget

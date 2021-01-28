@@ -20,6 +20,7 @@ spring:
         output:
           destination: orgChangeTopic
           content-type: application/json
+
       kafka:
         binder:
           zkNodes: localhost
