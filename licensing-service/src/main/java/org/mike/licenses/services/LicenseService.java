@@ -8,7 +8,6 @@ import org.mike.licenses.clients.OrganizationRestTemplateClient;
 import org.mike.licenses.model.License;
 import org.mike.licenses.model.Organization;
 import org.mike.licenses.repository.LicenseRepository;
-import org.mike.licenses.utils.UserContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -62,7 +61,7 @@ public class LicenseService {
     public List<License> getLicensesByOrg(String organizationId) {
         //randomlyRunLong(); // FOR IMAGE CIRCUIT BREAKER WORK SAKE
 
-        log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
+        //log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
 
         return licenseRepository.findByOrganizationId(organizationId);
     }

@@ -59,7 +59,7 @@
         <start-class>org.mike.confsvr.ConfigServerApplication</start-class>
 
         <docker.image.name>mikebychkov/tmx-confsvr</docker.image.name>
-        <docker.image.tag>chapter8</docker.image.tag>
+        <docker.image.tag>chapter9</docker.image.tag>
     </properties>
 
     <build>

@@ -3,7 +3,6 @@ package org.mike.organization.events.source;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mike.organization.events.models.OrganizationChangeModel;
-import org.mike.organization.utils.UserContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
@@ -27,7 +26,9 @@ public class SimpleSourceBean {
                 OrganizationChangeModel.class.getTypeName(),
                 action,
                 orgId,
-                UserContextHolder.getContext().getCorrelationId());
+                //UserContextHolder.getContext().getCorrelationId()
+                ""
+        );
 
         source.output().send(MessageBuilder.withPayload(change).build());
     }

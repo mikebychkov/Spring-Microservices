@@ -14,8 +14,8 @@ public class TrackingFilter extends ZuulFilter {
     private static final boolean SHOULD_FILTER = true;
     private static final Logger log = LogManager.getLogger(TrackingFilter.class);
 
-    @Autowired
-    FilterUtils filterUtils;
+//    @Autowired
+//    FilterUtils filterUtils;
 
     @Override
     public String filterType() {
@@ -32,9 +32,9 @@ public class TrackingFilter extends ZuulFilter {
     }
 
     private boolean isCorrelationIdPresent() {
-      if (filterUtils.getCorrelationId() !=null) {
-          return true;
-      }
+//      if (filterUtils.getCorrelationId() !=null) {
+//          return true;
+//      }
       return false;
     }
 
@@ -44,16 +44,17 @@ public class TrackingFilter extends ZuulFilter {
 
     public Object run() {
 
-        if (isCorrelationIdPresent()) {
-           log.info("### tmx-correlation-id found in tracking filter: {}. ", filterUtils.getCorrelationId());
-        }
-        else{
-            filterUtils.setCorrelationId(generateCorrelationId());
-            log.info("### tmx-correlation-id generated in tracking filter: {}.", filterUtils.getCorrelationId());
-        }
+//        if (isCorrelationIdPresent()) {
+//           log.info("### tmx-correlation-id found in tracking filter: {}. ", filterUtils.getCorrelationId());
+//        }
+//        else{
+//            filterUtils.setCorrelationId(generateCorrelationId());
+//            log.info("### tmx-correlation-id generated in tracking filter: {}.", filterUtils.getCorrelationId());
+//        }
 
         RequestContext ctx = RequestContext.getCurrentContext();
         log.info("### Processing incoming request for {}.",  ctx.getRequest().getRequestURI());
+
         return null;
     }
 }

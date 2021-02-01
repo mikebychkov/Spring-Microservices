@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import brave.Tracer;
 
 @Component
 public class ResponseFilter extends ZuulFilter {
@@ -13,9 +14,9 @@ public class ResponseFilter extends ZuulFilter {
     private static final int FILTER_ORDER = 1;
     private static final boolean SHOULD_FILTER = true;
     private static final Logger log = LogManager.getLogger(ResponseFilter.class);
-    
+
     @Autowired
-    FilterUtils filterUtils;
+    private Tracer tracer;
 
     @Override
     public String filterType() {
@@ -35,13 +36,7 @@ public class ResponseFilter extends ZuulFilter {
     @Override
     public Object run() {
         RequestContext ctx = RequestContext.getCurrentContext();
-
-        log.info("### Adding the correlation id to the outbound headers. {}", filterUtils.getCorrelationId());
-
-        ctx.getResponse().addHeader(FilterUtils.CORRELATION_ID, filterUtils.getCorrelationId());
-
-        log.info("### Completing outgoing request for {}.", ctx.getRequest().getRequestURI());
-
+        ctx.getResponse().addHeader("tmx-correlation-id", tracer.currentSpan().context().traceIdString());
         return null;
     }
 }

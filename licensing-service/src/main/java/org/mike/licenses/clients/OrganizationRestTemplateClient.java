@@ -4,10 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mike.licenses.model.Organization;
 import org.mike.licenses.repository.OrganizationRedisRepository;
-import org.mike.licenses.utils.UserContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,8 +17,8 @@ public class OrganizationRestTemplateClient {
     private static final Logger log = LogManager.getLogger(OrganizationRestTemplateClient.class);
 
     @Autowired
-    //OAuth2RestTemplate restTemplate;
-    private RestTemplate restTemplate;
+    private OAuth2RestTemplate restTemplate;
+    //private RestTemplate restTemplate;
 
     @Autowired
     private OrganizationRedisRepository orgRepo;
@@ -48,7 +48,7 @@ public class OrganizationRestTemplateClient {
             return rsl;
         }
 
-        log.info("### In Licensing Service.getOrganization: {}", UserContextHolder.getContext().getCorrelationId());
+        //log.info("### In Licensing Service.getOrganization: {}", UserContextHolder.getContext().getCorrelationId());
 
         ResponseEntity<Organization> restExchange =
                 restTemplate.exchange(

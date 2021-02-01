@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mike.licenses.events.models.OrganizationChangeModel;
 import org.mike.licenses.repository.OrganizationRedisRepository;
-import org.mike.licenses.utils.UserContextInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
@@ -42,28 +41,26 @@ public class LicensingServiceApplication {
 
     private static final Logger log = LogManager.getLogger(LicensingServiceApplication.class);
 
-    @LoadBalanced
-    @Bean
-    public RestTemplate getRestTemplate(){
-        RestTemplate template = new RestTemplate();
-        List interceptors = template.getInterceptors();
-        if (interceptors == null) {
-            template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
-        } else {
-            interceptors.add(new UserContextInterceptor());
-            template.setInterceptors(interceptors);
-        }
-        return template;
-    }
+//    @LoadBalanced
+//    @Bean
+//    public RestTemplate getRestTemplate(){
+//        RestTemplate template = new RestTemplate();
+////        List interceptors = template.getInterceptors();
+////        if (interceptors == null) {
+////            template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
+////        } else {
+////            interceptors.add(new UserContextInterceptor());
+////            template.setInterceptors(interceptors);
+////        }
+//        return template;
+//    }
 
-    /*
     @LoadBalanced
     @Bean
     public OAuth2RestTemplate oauth2RestTemplate(@Qualifier("oauth2ClientContext")  OAuth2ClientContext oauth2ClientContext,
                                                  OAuth2ProtectedResourceDetails details) {
         return new OAuth2RestTemplate(details, oauth2ClientContext);
     }
-    */
 
     public static void main(String[] args) {
         SpringApplication.run(LicensingServiceApplication.class, args);

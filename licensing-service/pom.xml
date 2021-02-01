@@ -111,6 +111,16 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
     </dependencies>
 
     <properties>
@@ -122,7 +132,7 @@
         <start-class>org.mike.licenses.LicensingServiceApplication</start-class>
 
         <docker.image.name>mikebychkov/tmx-licensing-service</docker.image.name>
-        <docker.image.tag>chapter8</docker.image.tag>
+        <docker.image.tag>chapter9</docker.image.tag>
     </properties>
 
     <build>

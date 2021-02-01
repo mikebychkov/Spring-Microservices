@@ -1,11 +1,11 @@
 version: '2'
 services:
   eurekaserver:
-    image: mikebychkov/tmx-eurekasvr:chapter8
+    image: mikebychkov/tmx-eurekasvr:chapter9
     ports:
        - "8761:8761"
   configserver:
-    image: mikebychkov/tmx-confsvr:chapter8
+    image: mikebychkov/tmx-confsvr:chapter9
     restart: always
     ports:
        - "8888:8888"
@@ -14,7 +14,7 @@ services:
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
   zuulserver:
-    image: mikebychkov/tmx-zuulsvr:chapter8
+    image: mikebychkov/tmx-zuulsvr:chapter9
     restart: always
     ports:
       - "5555:5555"
@@ -34,7 +34,7 @@ services:
       POSTGRES_PASSWORD: "Zxcv1234"
       POSTGRES_DB: "spmia_local"
   licensingservice:
-    image: mikebychkov/tmx-licensing-service:chapter8
+    image: mikebychkov/tmx-licensing-service:chapter9
     restart: always
     depends_on:
       - eurekaserver
@@ -58,7 +58,7 @@ services:
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
   organizationservice:
-    image: mikebychkov/tmx-organization-service:chapter8
+    image: mikebychkov/tmx-organization-service:chapter9
     restart: always
     depends_on:
       - eurekaserver
@@ -80,7 +80,7 @@ services:
       KAFKASERVER_PORT: "2181"
       DATABASESERVER_PORT: "5432"
   authenticationservice:
-    image: mikebychkov/tmx-authentication-service:chapter8
+    image: mikebychkov/tmx-authentication-service:chapter9
     restart: always
     depends_on:
       - eurekaserver
@@ -107,3 +107,8 @@ services:
     #ports:
     #  - 2181:2181
     #  - 9092:9092
+  logspout:
+    image: gliderlabs/logspout
+    command: syslog://logs.papertrailapp.com:32675
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
