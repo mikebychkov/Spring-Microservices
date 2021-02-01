@@ -6,8 +6,8 @@ spring:
   cloud:
     config:
       enabled: true
-  #config:
-  #  import: "http://localhost:8888"
+#  config:
+#    import: "http://configserver:8888"
 
 ## Whilst config server registering as "config server" at eureka server takes more time than to start another
 ## eureka clients, services depending on config server crashing (at least when using @Value placeholders) for first time start.

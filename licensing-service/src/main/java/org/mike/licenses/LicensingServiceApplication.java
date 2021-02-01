@@ -33,7 +33,7 @@ import java.util.List;
 //@EnableEurekaClient     // OPTIONAL, DEPENDENCY USAGE IS ENOUGH (netflix-eureka-client)
 //@EnableDiscoveryClient  // USED WHEN IMPLEMENTING SPRING DISCOVERY SERVICE
 //@EnableFeignClients     // USED WHEN IMPLEMENTING FEIGN LIBRARIES
-//@RefreshScope
+@RefreshScope
 @SpringBootApplication
 @EnableCircuitBreaker       // HYSTRIX LIBRARY
 @EnableResourceServer       // ENABLING OAUTH2 SERVER PROTECTION
