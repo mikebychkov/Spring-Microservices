@@ -13,6 +13,11 @@ services:
       ENCRYPT_KEY: "IMSYMMETRIC"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    ports:
+      - 9411:9411
   zuulserver:
     image: mikebychkov/tmx-zuulsvr:chapter9
     restart: always
@@ -23,8 +28,10 @@ services:
       SERVER_PORT: "5555"
       CONFIGSERVER_URI: "http://configserver:8888"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
+      ZIPKIN_URI: "http://zipkin:9411"
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
+      ZIPKIN_PORT: "9411"
       DATABASESERVER_PORT: "5432"
   database:
     image: postgres:12.5
@@ -50,11 +57,13 @@ services:
       AUTHSERVER_URI: "http://authenticationservice:8901/auth/user/"
       KAFKASERVER_URI: "kafkaserver"
       ZKSERVER_URI: "kafkaserver"
+      ZIPKIN_URI: "http://zipkin:9411"
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
       AUTHSERVER_PORT: "8901"
       KAFKASERVER_PORT: "2181"
       REDIS_PORT: "6379"
+      ZIPKIN_PORT: "9411"
       DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY: "IMSYMMETRIC"
   organizationservice:
@@ -74,10 +83,12 @@ services:
       AUTHSERVER_URI: "http://authenticationservice:8901/auth/user/"
       KAFKASERVER_URI: "kafkaserver"
       ZKSERVER_URI: "kafkaserver"
+      ZIPKIN_URI: "http://zipkin:9411"
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_PORT: "8888"
       AUTHSERVER_PORT: "8901"
       KAFKASERVER_PORT: "2181"
+      ZIPKIN_PORT: "9411"
       DATABASESERVER_PORT: "5432"
   authenticationservice:
     image: mikebychkov/tmx-authentication-service:chapter9

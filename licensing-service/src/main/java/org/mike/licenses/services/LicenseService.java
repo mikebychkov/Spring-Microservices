@@ -61,8 +61,6 @@ public class LicenseService {
     public List<License> getLicensesByOrg(String organizationId) {
         //randomlyRunLong(); // FOR IMAGE CIRCUIT BREAKER WORK SAKE
 
-        //log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
-
         return licenseRepository.findByOrganizationId(organizationId);
     }
 

@@ -27,7 +27,7 @@ public class LicenseServiceController {
     @RequestMapping(value="/",method = RequestMethod.GET)
     public List<License> getLicenses(@PathVariable("organizationId") String organizationId) {
 
-        //log.info("### CORRELATION ID: {}", UserContextHolder.getContext().getCorrelationId());
+        log.info("### getLicenses() BY ORG: {}", organizationId);
 
         return licenseService.getLicensesByOrg(organizationId);
     }
@@ -35,6 +35,8 @@ public class LicenseServiceController {
     @RequestMapping(value="/{licenseId}",method = RequestMethod.GET)
     public License getLicenses( @PathVariable("organizationId") String organizationId,
                                 @PathVariable("licenseId") String licenseId) {
+
+        log.info("### getLicenses() BY ID: {}", licenseId);
 
         return licenseService.getLicense(organizationId, licenseId);
     }

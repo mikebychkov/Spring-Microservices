@@ -26,7 +26,6 @@ public class SimpleSourceBean {
                 OrganizationChangeModel.class.getTypeName(),
                 action,
                 orgId,
-                //UserContextHolder.getContext().getCorrelationId()
                 ""
         );
 

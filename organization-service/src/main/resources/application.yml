@@ -20,16 +20,19 @@ spring:
         output:
           destination: orgChangeTopic
           content-type: application/json
-
       kafka:
         binder:
           zkNodes: localhost
           brokers: localhost
+  zipkin:
+    base-url: "http://zipkin:9411"
 
 security:
   oauth2:
     resource:
       user-info-uri: http://authenticationservice:8901/auth/user/
+
+###################################################################################################
 
 logging:
   level:

@@ -20,7 +20,7 @@ public class ResponseFilter extends ZuulFilter {
 
     @Override
     public String filterType() {
-        return FilterUtils.POST_FILTER_TYPE;
+        return "post";
     }
 
     @Override
@@ -35,6 +35,9 @@ public class ResponseFilter extends ZuulFilter {
 
     @Override
     public Object run() {
+
+        log.info("### Fulfilling outgoing request with TRACE-ID.");
+
         RequestContext ctx = RequestContext.getCurrentContext();
         ctx.getResponse().addHeader("tmx-correlation-id", tracer.currentSpan().context().traceIdString());
         return null;

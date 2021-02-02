@@ -42,13 +42,13 @@ public class OrganizationRestTemplateClient {
 
     public Organization getOrganization(String organizationId){
 
+        log.info("### getOrganization(): {}", organizationId);
+
         Organization rsl = checkRedisCache(organizationId);
         if (rsl != null) {
             log.info("### I have successfully retrieved an organization {} FROM REDIS CACHE: {}", organizationId, rsl);
             return rsl;
         }
-
-        //log.info("### In Licensing Service.getOrganization: {}", UserContextHolder.getContext().getCorrelationId());
 
         ResponseEntity<Organization> restExchange =
                 restTemplate.exchange(
