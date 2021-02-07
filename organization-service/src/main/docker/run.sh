@@ -3,8 +3,14 @@ echo "********************************************************"
 echo "Starting Organization Service  "
 echo "********************************************************"
 
-dockerize -wait http://eurekaserver:8761 -wait http://configserver:8888 -wait http://database:5432
-dockerize -wait http://kafkaserver:2181
+sleep 60
+
+#dockerize -wait http://eurekaserver:8761 -wait http://configserver:8888 -wait http://database:5432
+#dockerize -wait http://kafkaserver:2181
+
+dockerize -wait $EUREKASERVER_URI -wait $CONFIGSERVER_URI -wait http://database:5432
+dockerize -wait $KAFKASERVER_URI
+
 
 java -Djava.security.egd=file:/dev/./urandom -Dserver.port=$SERVER_PORT   \
      -Deureka.client.serviceUrl.defaultZone=$EUREKASERVER_URI             \

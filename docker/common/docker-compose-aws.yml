@@ -2,27 +2,37 @@ version: '2'
 services:
   eurekaserver:
     image: mikebychkov/tmx-eurekasvr:chapter10
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
        - "8761:8761"
   configserver:
     image: mikebychkov/tmx-confsvr:chapter10
-    restart: always
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
        - "8888:8888"
+    links:
+       - "eurekaserver:eurekaserver"
     environment:
       ENCRYPT_KEY: "IMSYMMETRIC"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
   zipkin:
     image: openzipkin/zipkin
-    restart: always
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
       - 9411:9411
   zuulserver:
     image: mikebychkov/tmx-zuulsvr:chapter10
-    restart: always
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
       - "5555:5555"
+    links:
+      - "eurekaserver:eurekaserver"
+      - "configserver:configserver"
     environment:
       PROFILE: "default"
       SERVER_PORT: "5555"
@@ -33,24 +43,20 @@ services:
       ZIPKIN_URI: "http://zipkin:9411"
       ZIPKIN_PORT: "9411"
       DATABASESERVER_PORT: "5432"
-  database:
-    image: postgres:12.5
-    restart: always
-    environment:
-      POSTGRES_USER: "postgres1"
-      POSTGRES_PASSWORD: "Zxcv1234"
-      POSTGRES_DB: "spmia_local"
   licensingservice:
     image: mikebychkov/tmx-licensing-service:chapter10
-    restart: always
-    depends_on:
-      - eurekaserver
-      - configserver
-      - database
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
       - "8080:8080"
+    links:
+      - "eurekaserver:eurekaserver"
+      - "configserver:configserver"
+      - "zuulserver:zuulserver"
+      - "kafkaserver:kafkaserver"
+      - "authenticationservice:authenticationservice"
     environment:
-      PROFILE: "prod"
+      PROFILE: "aws"
       SERVER_PORT: "8080"
       ENCRYPT_KEY: "IMSYMMETRIC"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
@@ -70,15 +76,18 @@ services:
       DATABASESERVER_PORT: "5432"
   organizationservice:
     image: mikebychkov/tmx-organization-service:chapter10
-    restart: always
-    depends_on:
-      - eurekaserver
-      - configserver
-      - database
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
       - "8085:8085"
+    links:
+      - "eurekaserver:eurekaserver"
+      - "configserver:configserver"
+      - "zuulserver:zuulserver"
+      - "kafkaserver:kafkaserver"
+      - "authenticationservice:authenticationservice"
     environment:
-      PROFILE: "prod"
+      PROFILE: "aws"
       SERVER_PORT: "8085"
       EUREKASERVER_URI: "http://eurekaserver:8761/eureka/"
       EUREKASERVER_PORT: "8761"
@@ -95,13 +104,14 @@ services:
       DATABASESERVER_PORT: "5432"
   authenticationservice:
     image: mikebychkov/tmx-authentication-service:chapter10
-    restart: always
-    depends_on:
-      - eurekaserver
-      - configserver
-      - database
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     ports:
       - "8901:8901"
+    links:
+      - "eurekaserver:eurekaserver"
+      - "configserver:configserver"
+      - "zuulserver:zuulserver"
     environment:
       PROFILE: "default"
       SERVER_PORT: "8901"
@@ -111,19 +121,18 @@ services:
       CONFIGSERVER_PORT: "8888"
       DATABASESERVER_URI: "http://database:5432"
       DATABASESERVER_PORT: "5432"
-  redis:
-    image: redis
-    restart: always
-    #ports:
-    #  - 6379:6379
   kafkaserver:
     image: mikebychkov/kafka
-    restart: always
-    #ports:
-    #  - 2181:2181
-    #  - 9092:9092
+    #mem_limit: 1073741824
+    mem_limit: 800000000
+    ports:
+      - 2181:2181
+      - 9092:9092
   logspout:
     image: gliderlabs/logspout
+    #mem_limit: 1073741824
+    mem_limit: 800000000
     command: syslog://logs.papertrailapp.com:32675
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
+
