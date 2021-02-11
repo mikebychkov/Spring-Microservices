@@ -3,7 +3,7 @@ services:
   eurekaserver:
     image: mikebychkov/tmx-eurekasvr:chapter10
     #mem_limit: 1073741824
-    mem_limit: 800000000
+    mem_limit: 1000000000
     ports:
        - "8761:8761"
   configserver:
@@ -21,7 +21,7 @@ services:
   zipkin:
     image: openzipkin/zipkin
     #mem_limit: 1073741824
-    mem_limit: 800000000
+    mem_limit: 500000000
     ports:
       - 9411:9411
   zuulserver:
@@ -42,7 +42,6 @@ services:
       CONFIGSERVER_PORT: "8888"
       ZIPKIN_URI: "http://zipkin:9411"
       ZIPKIN_PORT: "9411"
-      DATABASESERVER_PORT: "5432"
   licensingservice:
     image: mikebychkov/tmx-licensing-service:chapter10
     #mem_limit: 1073741824
@@ -70,10 +69,8 @@ services:
       ZKSERVER_URI: "kafkaserver"
       ZIPKIN_URI: "http://zipkin:9411"
       ZIPKIN_PORT: "9411"
-      REDIS_URI: "http://redis:6379"
+      REDIS_URI: "redissvr.rk6ewl.0001.euc1.cache.amazonaws.com"
       REDIS_PORT: "6379"
-      DATABASESERVER_URI: "http://database:5432"
-      DATABASESERVER_PORT: "5432"
   organizationservice:
     image: mikebychkov/tmx-organization-service:chapter10
     #mem_limit: 1073741824
@@ -100,8 +97,6 @@ services:
       ZKSERVER_URI: "kafkaserver"
       ZIPKIN_URI: "http://zipkin:9411"
       ZIPKIN_PORT: "9411"
-      DATABASESERVER_URI: "http://database:5432"
-      DATABASESERVER_PORT: "5432"
   authenticationservice:
     image: mikebychkov/tmx-authentication-service:chapter10
     #mem_limit: 1073741824
@@ -119,8 +114,6 @@ services:
       EUREKASERVER_PORT: "8761"
       CONFIGSERVER_URI: "http://configserver:8888"
       CONFIGSERVER_PORT: "8888"
-      DATABASESERVER_URI: "http://database:5432"
-      DATABASESERVER_PORT: "5432"
   kafkaserver:
     image: mikebychkov/kafka
     #mem_limit: 1073741824
@@ -135,4 +128,3 @@ services:
     command: syslog://logs.papertrailapp.com:32675
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
-

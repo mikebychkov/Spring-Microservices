@@ -1,4 +1,4 @@
-export BUILD_NAME=$(date -u "+%Y%m%d")
+echo "Building with travis commit of $BUILD_NAME ..."
 
 mvn -f ./eurekasvr clean package docker:build
 mvn -f ./confsvr clean package docker:build

@@ -1,0 +1,31 @@
+language: java
+jdk:
+  - openjdk11
+
+cache:
+  directories:
+    - "$HOME/.m2"
+
+sudo: required
+services:
+  - docker
+
+notifications:
+  email:
+    recipients:
+      -mihailbichkov@yandex.ru
+    on_success: never
+    on_failure: always
+
+branches:
+  only:
+    - master
+
+before_install:
+  - sudo curl -Lo /usr/local/bin/ecs-cli https://amazon-ecs-cli.s3.amazonaws.com/ecs-cli-linux-amd64-latest
+  - sudo chmod +x /usr/local/bin/ecs-cli
+  - export BUILD_NAME=$(date -u "+%Y%m%d")
+script:
+  - sh travis_scripts/build_services.sh
+  - sh travis_scripts/deploy_to_docker_hub.sh
+  - sh travis_scripts/deploy_to_amazon_ecs.sh

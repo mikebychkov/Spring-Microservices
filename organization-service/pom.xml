@@ -121,7 +121,8 @@
     <start-class>org.mike.organization.OrganizationServiceApplication</start-class>
 
     <docker.image.name>mikebychkov/tmx-organization-service</docker.image.name>
-    <docker.image.tag>chapter10</docker.image.tag>
+    <!--suppress UnresolvedMavenProperty -->
+    <docker.image.tag>${env.BUILD_NAME}</docker.image.tag>
   </properties>
 
   <build>
